@@ -1,2 +1,2 @@
-# core-api
-Contains the chatbot and API functionalities implemented in JavaScript
+# core
+> Contains the chatbot and API functionalities implemented in JavaScript

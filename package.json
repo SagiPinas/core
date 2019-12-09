@@ -1,0 +1,37 @@
+{
+  "dependencies": {
+    "@types/request": "^2.48.3",
+    "axios": "^0.19.0",
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "request": "^2.88.0",
+    "socket.io": "^2.2.0"
+  },
+  "name": "core",
+  "description": "SagiPinas Core",
+  "version": "1.0.0",
+  "main": "index.js",
+  "devDependencies": {
+    "@types/express": "^4.17.2",
+    "@types/node": "^12.12.14",
+    "nodemon": "^2.0.1",
+    "ts-node": "^8.5.4",
+    "typescript": "^3.7.3"
+  },
+  "scripts": {
+    "start": "node ./build/index.js",
+    "dev": "nodemon ./src/index.ts",
+    "buid": "tsc -p ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/quadroloop/hybrid-theory-core"
+  },
+  "author": "Bryce Mercines",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SagiPinas/core/issues"
+  },
+  "homepage": "https://sagipinas.now.sh"
+}
