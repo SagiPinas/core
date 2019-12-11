@@ -25,6 +25,8 @@ console.log(`===============================`)
 console.log(`SagiPinas Code API ${port}`)
 console.log(`===============================`)
 
+const googleMapsAPIKEY = "AIzaSyD5kFZMwUIUDZ25nTtLx0_0G3x1d2GMiCY";
+
 let evacuees = [];
 let reportees = [];
 
@@ -66,6 +68,7 @@ app.post('/webhook', (req, res) => {
       let sender_psid = webhook_event.sender.id;
 
       // if referral is ever needed
+
       // if (entry.messaging[0].referral) {
       //   handleReferral(sender_psid, entry.messaging[0].referral.ref)
       // }
@@ -98,7 +101,8 @@ const defaultActions = () => {
       "type": "template",
       "payload": {
         "template_type": "button",
-        "text": "Hello! thank you for reaching out to SagiPinas what can we help you with?",
+        "text": `Hello! thank you for reaching out to
+        SagiPinas what can we help you with?`,
         "buttons": [
           {
             "type": "postback",
@@ -186,7 +190,8 @@ const askForLocation = (sender) => {
       "payload": {
         "template_type": "button",
         "text": `It appears that you still haven't sent your location after
-        requesting for nearest evacuation areas, you can cancel this action if you want.`,
+        requesting for nearest evacuation areas, you can
+        cancel this action if you want.`,
         "buttons": [
           {
             "type": "postback",
@@ -255,7 +260,15 @@ const askforCompletetion = (sender) => {
 // get areas
 
 const getAreas = (sender, location) => {
-  axios.get(`https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${location.lat},${location.long}&rankby=distance&type=establishment&keyword=hospital,school&key=AIzaSyD5kFZMwUIUDZ25nTtLx0_0G3x1d2GMiCY`)
+  axios.get(`https://maps.googleapis.com/maps/api/place/nearbysearch/json`, {
+    params: {
+      location: `${location.lat},${location.long}`,
+      rankby: "distance",
+      type: "establishment",
+      keyword: "hospital,school",
+      key: googleMapsAPIKEY
+    }
+  })
     .then(res => {
       if (res.data.results.length > 0) {
 
@@ -290,6 +303,8 @@ const getAreas = (sender, location) => {
         })
       }
       evacuees.splice(evacuees.indexOf(sender), 1)
+    }).catch(err => {
+      console.log(err)
     })
 }
 
