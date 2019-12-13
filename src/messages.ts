@@ -17,6 +17,7 @@ let message = {
   "goAhead": "Go Ahead! :) your next message will be considered as your emergency concern!",
   "waitforFacilities": "Got it, please wait while we find the nearest facilities where you can evacuate..",
   "askIncident": "Has there been a natural disaster in your area ? please pick from the list below:",
+  "cancelReport": "Report Cancelled."
 }
 
 export default message;

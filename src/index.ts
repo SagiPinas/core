@@ -428,8 +428,8 @@ const handleMessage = (sender_psid, received_message, attachments) => {
       reportee.details = received_message.text;
       getLocation(sender_psid);
     }
-
-    if (reportee.type !== "others" && reportee.details === "") {
+    // poor logic , faulty, must improve
+    if (reportee.type !== "others" && reportee.details === "" && !attachments) {
       reportee.details = received_message.text;
       getLocation(sender_psid);
     }
@@ -512,6 +512,11 @@ const handlePostback = (sender_psid, received_postback) => {
       case 'cancel_evacuation':
         evacuees.splice(evacuees.indexOf(sender_psid), 1)
         callSendAPI(sender_psid, { "text": msg.cancelLocation })
+        callSendAPI(sender_psid, defaultActions())
+        break;
+      case 'cancel_report':
+        reportees.splice(reportees.indexOf(sender_psid), 1)
+        callSendAPI(sender_psid, { "text": msg.cancelReport })
         callSendAPI(sender_psid, defaultActions())
         break;
       default:
