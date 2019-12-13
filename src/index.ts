@@ -30,6 +30,8 @@ const googleMapsAPIKEY = "AIzaSyD5kFZMwUIUDZ25nTtLx0_0G3x1d2GMiCY";
 let evacuees = [];
 let reportees = [];
 
+import msg from './messages';
+
 
 app.get("/", (req, res) => {
   res.send({
@@ -76,7 +78,11 @@ app.post('/webhook', (req, res) => {
       io.emit('activity');
 
       if (webhook_event.message) {
-        handleMessage(sender_psid, webhook_event.message, webhook_event.message.attachments);
+        handleMessage(
+          sender_psid,
+          webhook_event.message,
+          webhook_event.message.attachments
+        );
       } else if (webhook_event.postback) {
         handlePostback(sender_psid, webhook_event.postback);
       }
@@ -101,8 +107,7 @@ const defaultActions = () => {
       "type": "template",
       "payload": {
         "template_type": "button",
-        "text": `Hello! thank you for reaching out to
-        SagiPinas what can we help you with?`,
+        "text": msg.welcomeGreeting,
         "buttons": [
           {
             "type": "postback",
@@ -189,9 +194,7 @@ const askForLocation = (sender) => {
       "type": "template",
       "payload": {
         "template_type": "button",
-        "text": `It appears that you still haven't sent your location after
-        requesting for nearest evacuation areas, you can
-        cancel this action if you want.`,
+        "text": msg.askLocation,
         "buttons": [
           {
             "type": "postback",
@@ -214,8 +217,7 @@ const getLocation = (sender) => {
       "type": "template",
       "payload": {
         "template_type": "button",
-        "text": `Lastly please send us your location, so that we can easily
-        find you and send the appropriate rescue autorities`,
+        "text": msg.getLocation,
         "buttons": [
           {
             "type": "postback",
@@ -240,8 +242,7 @@ const askforCompletetion = (sender) => {
       "type": "template",
       "payload": {
         "template_type": "button",
-        "text": `Your incident report is still incomplete,
-        you can continue, or cancel this report`,
+        "text": msg.incompleteReport,
         "buttons": [
           {
             "type": "postback",
@@ -273,9 +274,7 @@ const getAreas = (sender, location) => {
       if (res.data.results.length > 0) {
 
         callSendAPI(sender, {
-          "text":
-            `Here is a list of near by
-        establishments that can serve as possible evacuation centers`
+          "text": msg.nearbyEvacuation
         })
 
 
@@ -298,8 +297,7 @@ const getAreas = (sender, location) => {
 
       } else {
         callSendAPI(sender, {
-          "text": `Sorry we failed to find
-        evacuation facilities near your location`
+          "text": msg.noAreas
         })
       }
       evacuees.splice(evacuees.indexOf(sender), 1)
@@ -312,13 +310,12 @@ const getAreas = (sender, location) => {
 
 const getEvacuationAreas = (sender) => {
   let message = {
-    "text": `Okay, Please send us your current location, so we can
-    help you find places where you can head for evacuation.`,
+    "text": msg.areaAskLocation,
   }
   callSendAPI(sender, message)
   message = {
-    "text": `We'll be expecting you to send
-  your location on your next message.` }
+    "text": msg.expectLocation
+  }
   callSendAPI(sender, message)
 
   if (!evacuees.includes(sender)) {
@@ -336,8 +333,7 @@ const incidentReport = (sender) => {
       "type": "template",
       "payload": {
         "template_type": "button",
-        "text": `Has there been a natural disaster in your area ?
-        please pick from the list below:`,
+        "text": msg.askIncident,
         "buttons": [
           {
             "type": "postback",
@@ -364,8 +360,7 @@ const incidentReport = (sender) => {
       "type": "template",
       "payload": {
         "template_type": "button",
-        "text": `What seems to be the problem?
-        please select from the list below:`,
+        "text": msg.askProblem,
         "buttons": [
           {
             "type": "postback",
@@ -401,18 +396,13 @@ const incidentReport = (sender) => {
 
 const getDetails = (sender) => {
   callSendAPI(sender, {
-    "text": `Got it!, please describe your situation,
-    condition, place, name and other things that
-    could help us assess your situation, please keep calm and take your time:
-    (Your next message will be considered as your response to this question)`})
+    "text": msg.getDetails
+  })
 }
 
 const getSpecification = (sender) => {
   callSendAPI(sender, {
-    "text": `Okay, please describe your emergency,
-    so we can assess your situation,
-    please keep calm and take your time: (Your next
-    message will be considered as your response to this question)`
+    "text": msg.getSpecification
   })
 }
 
@@ -450,9 +440,7 @@ const handleMessage = (sender_psid, received_message, attachments) => {
       if (attachments && attachments[0].type === "location") {
         reportee.location = attachments[0].payload.coordinates
 
-        let messageText = `"Got it! , we recieved your report. we will notify
-        you here, AS SOON AS POSSIBLE once your report is verified.
-        Please stay safe for the mean time."`
+        let messageText = msg.gotLocation
 
         callSendAPI(sender_psid, { "text": messageText })
         io.emit("report", reportee);
@@ -474,10 +462,8 @@ const handleMessage = (sender_psid, received_message, attachments) => {
   if (evacuees.includes(sender_psid)) {
     if (attachments && attachments[0].type === "location") {
 
-      let messageText = `
-      "Got it, please wait while we find the nearest
-       facilities where you can evacuate.."
-      `
+      let messageText = msg.waitforFacilities
+
       callSendAPI(sender_psid, { "text": messageText })
       getAreas(sender_psid, attachments[0].payload.coordinates)
     } else {
@@ -506,10 +492,7 @@ const handlePostback = (sender_psid, received_postback) => {
   let payload = received_postback.payload;
 
   if (payload === '') {
-    response = textResponse(`
-    Go Ahead! :) your next message will be considered
-    as your emergency concern!
-    `);
+    response = textResponse(msg.goAhead);
     callSendAPI(sender_psid, response);
   } else {
 
@@ -528,7 +511,7 @@ const handlePostback = (sender_psid, received_postback) => {
         break;
       case 'cancel_evacuation':
         evacuees.splice(evacuees.indexOf(sender_psid), 1)
-        callSendAPI(sender_psid, { "text": "Cancelled location sharing." })
+        callSendAPI(sender_psid, { "text": msg.cancelLocation })
         callSendAPI(sender_psid, defaultActions())
         break;
       default:
@@ -554,14 +537,11 @@ io.sockets.on('connection', function (socket) {
   socket.on("verifyReport", (data) => {
     delete reportees[data.id];
     callSendAPI(data.id, {
-      "text": `Your Report has been verfied! rescue authorities
-      has been contacted and are on their way to your location,
-     thank you for using SagiPinas! :)`
+      "text": msg.reportVerified
     })
 
     callSendAPI(data.id, {
-      "text": `If you can, please stay on the online
-      you can message us to get more information about your location. :) `
+      "text": msg.stayOnline
     })
 
     // db.get('incidents').find({ uid: data.uid }).value().status = "verified";
