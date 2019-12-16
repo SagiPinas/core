@@ -31,6 +31,7 @@ let evacuees = [];
 let reportees = [];
 
 import msg from './messages';
+import { guid } from './ulitilies';
 
 
 app.get("/", (req, res) => {
@@ -154,6 +155,26 @@ const callSendAPI = (sender_psid, response, cb = null) => {
     }
   });
 }
+
+
+// commands
+
+const cancelReport = (uid) => {
+  if (reportees) {
+    callSendAPI(uid, msg.cancelReport);
+    delete reportees[uid];
+  }
+}
+
+const watchCommands = (messageText, userId) => {
+  let command = messageText.toLowerCase()
+  switch (command) {
+    case "cancel:report":
+      cancelReport(userId)
+      break;
+  }
+}
+
 
 // send recent events
 
@@ -411,6 +432,8 @@ const getSpecification = (sender) => {
 const handleMessage = (sender_psid, received_message, attachments) => {
   let response;
 
+  watchCommands(received_message.text, sender_psid);
+
   console.table(reportees);
 
   let report = reportees[sender_psid];
@@ -448,7 +471,7 @@ const handleMessage = (sender_psid, received_message, attachments) => {
 
         let newReport = report;
         newReport.status = "unverified";
-        newReport.uid = "123123123randomid";
+        newReport.uid = guid();
         newReport.timestamp = Date.now();
 
         // save report type
