@@ -515,7 +515,7 @@ const handlePostback = (sender_psid, received_postback) => {
         callSendAPI(sender_psid, defaultActions())
         break;
       case 'cancel_report':
-        reportees.splice(reportees.indexOf(sender_psid), 1)
+        delete reportees[sender_psid];
         callSendAPI(sender_psid, { "text": msg.cancelReport })
         callSendAPI(sender_psid, defaultActions())
         break;
