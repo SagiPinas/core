@@ -413,39 +413,40 @@ const handleMessage = (sender_psid, received_message, attachments) => {
 
   console.table(reportees);
 
-  let reportee = reportees[sender_psid];
+  let report = reportees[sender_psid];
 
-  if (reportee) {
+  if (report) {
 
-    if (reportee.type === "others" && reportee.specified === "") {
-      reportee.specified = received_message.text;
+    if (report.type === "others" && report.specified === "") {
+      report.specified = received_message.text;
       getDetails(sender_psid);
     }
 
-    if (reportee.type === "others"
-      && reportee.specified !== ""
-      && reportee.specified !== received_message.text) {
-      reportee.details = received_message.text;
-      getLocation(sender_psid);
-    }
-    // poor logic , faulty, must improve
-    if (reportee.type !== "others" && reportee.details === "" && !attachments) {
-      reportee.details = received_message.text;
+    if (report.type === "others"
+      && report.specified !== ""
+      && report.specified !== received_message.text
+      && !attachments) {
+      report.details = received_message.text;
       getLocation(sender_psid);
     }
 
-    if (reportee.type !== ""
-      && reportee.details !== ""
-      && reportee.location === "") {
+    if (report.type !== "others" && report.details === "" && !attachments) {
+      report.details = received_message.text;
+      getLocation(sender_psid);
+    }
+
+    if (report.type !== ""
+      && report.details !== ""
+      && report.location === "") {
       if (attachments && attachments[0].type === "location") {
-        reportee.location = attachments[0].payload.coordinates
+        report.location = attachments[0].payload.coordinates
 
         let messageText = msg.gotLocation
 
         callSendAPI(sender_psid, { "text": messageText })
-        io.emit("report", reportee);
+        io.emit("report", report);
 
-        let newReport = reportee;
+        let newReport = report;
         newReport.status = "unverified";
         newReport.uid = "123123123randomid";
         newReport.timestamp = Date.now();
@@ -475,8 +476,8 @@ const handleMessage = (sender_psid, received_message, attachments) => {
 
     console.log(`user has ping: ${received_message.text}`)
 
-    if (!reportee) {
-      // display defualt actions
+    if (!report) {
+      // display defaul actions
       response = defaultActions();
       callSendAPI(sender_psid, response);
     }
