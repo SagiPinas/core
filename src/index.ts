@@ -167,11 +167,13 @@ const cancelReport = (uid) => {
 }
 
 const watchCommands = (messageText, userId) => {
-  let command = messageText.toLowerCase()
-  switch (command) {
-    case "cancel:report":
-      cancelReport(userId)
-      break;
+  if (messageText) {
+    let command = messageText.toLowerCase()
+    switch (command) {
+      case "cancel:report":
+        cancelReport(userId)
+        break;
+    }
   }
 }
 
