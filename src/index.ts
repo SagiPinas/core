@@ -32,13 +32,30 @@ let reportees = [];
 
 import msg from './messages';
 import { guid } from './ulitilies';
-
+import db from './db';
 
 app.get("/", (req, res) => {
   res.send({
     message: "SagiPinas Core v. 1.0",
     status: "running"
   })
+})
+
+app.get('/test', async (req, res) => {
+  try {
+    const client = await db.connect()
+    const result = await client.query('SELECT * FROM users');
+    const results = { 'results': (result) ? result.rows : null };
+    res.send(results);
+    client.release();
+  } catch (err) {
+    console.error(err);
+    res.send("Error " + err);
+  }
+})
+
+app.get("/test1", (req, res) => {
+  res.send(["testData"]);
 })
 
 app.get('/webhook', (req, res) => {
@@ -93,7 +110,6 @@ app.post('/webhook', (req, res) => {
   } else {
     res.sendStatus(404);
   }
-
 });
 
 const textResponse = (text) => {
@@ -131,7 +147,7 @@ const defaultActions = () => {
   }
 }
 
-const callSendAPI = (sender_psid, response, cb = null) => {
+const sendMessage = (sender_psid, response, cb = null) => {
   // Construct the message body
   let request_body = {
     "recipient": {
@@ -161,7 +177,7 @@ const callSendAPI = (sender_psid, response, cb = null) => {
 
 const cancelReport = (uid) => {
   if (reportees) {
-    callSendAPI(uid, msg.cancelReport);
+    sendMessage(uid, msg.cancelReport);
     delete reportees[uid];
   }
 }
@@ -204,11 +220,9 @@ const sendRecentEvents = (sender) => {
       }
     }
   }
-
-  callSendAPI(sender, events)
+  sendMessage(sender, events)
 }
 
-// ask for location again
 
 const askForLocation = (sender) => {
 
@@ -229,8 +243,7 @@ const askForLocation = (sender) => {
     }
   }
 
-  callSendAPI(sender, options)
-
+  sendMessage(sender, options)
 }
 
 const getLocation = (sender) => {
@@ -252,11 +265,10 @@ const getLocation = (sender) => {
     }
   }
 
-  callSendAPI(sender, options)
+  sendMessage(sender, options)
 
 }
 
-// ask for completion
 
 const askforCompletetion = (sender) => {
 
@@ -277,11 +289,10 @@ const askforCompletetion = (sender) => {
     }
   }
 
-  callSendAPI(sender, options)
+  sendMessage(sender, options)
 
 }
 
-// get areas
 
 const getAreas = (sender, location) => {
   axios.get(`https://maps.googleapis.com/maps/api/place/nearbysearch/json`, {
@@ -296,7 +307,7 @@ const getAreas = (sender, location) => {
     .then(res => {
       if (res.data.results.length > 0) {
 
-        callSendAPI(sender, {
+        sendMessage(sender, {
           "text": msg.nearbyEvacuation
         })
 
@@ -316,10 +327,10 @@ const getAreas = (sender, location) => {
             }
           }
         }
-        callSendAPI(sender, AreaList);
+        sendMessage(sender, AreaList);
 
       } else {
-        callSendAPI(sender, {
+        sendMessage(sender, {
           "text": msg.noAreas
         })
       }
@@ -329,25 +340,22 @@ const getAreas = (sender, location) => {
     })
 }
 
-// evacuation areas
 
 const getEvacuationAreas = (sender) => {
   let message = {
     "text": msg.areaAskLocation,
   }
-  callSendAPI(sender, message)
+  sendMessage(sender, message)
   message = {
     "text": msg.expectLocation
   }
-  callSendAPI(sender, message)
+  sendMessage(sender, message)
 
   if (!evacuees.includes(sender)) {
     evacuees.push(sender)
   }
 
 }
-
-// report an incident
 
 const incidentReport = (sender) => {
 
@@ -400,8 +408,8 @@ const incidentReport = (sender) => {
     }
   }
 
-  callSendAPI(sender, list1);
-  callSendAPI(sender, list2);
+  sendMessage(sender, list1);
+  sendMessage(sender, list2);
 
 
   if (!reportees[sender]) {
@@ -418,19 +426,17 @@ const incidentReport = (sender) => {
 }
 
 const getDetails = (sender) => {
-  callSendAPI(sender, {
+  sendMessage(sender, {
     "text": msg.getDetails
   })
 }
 
 const getSpecification = (sender) => {
-  callSendAPI(sender, {
+  sendMessage(sender, {
     "text": msg.getSpecification
   })
 }
 
-
-// Handles messages events
 const handleMessage = (sender_psid, received_message, attachments) => {
   let response;
 
@@ -468,7 +474,7 @@ const handleMessage = (sender_psid, received_message, attachments) => {
 
         let messageText = msg.gotLocation
 
-        callSendAPI(sender_psid, { "text": messageText })
+        sendMessage(sender_psid, { "text": messageText })
         io.emit("report", report);
 
         let newReport = report;
@@ -476,13 +482,14 @@ const handleMessage = (sender_psid, received_message, attachments) => {
         newReport.uid = guid();
         newReport.timestamp = Date.now();
 
-        // save report type
+        // TODO:: save report type
+
         // db.get('incidents').value().push(newReport);
         // db.write();
       }
     }
 
-    // askforCompletetion(sender_psid)
+    askforCompletetion(sender_psid)
   }
 
   if (evacuees.includes(sender_psid)) {
@@ -490,7 +497,7 @@ const handleMessage = (sender_psid, received_message, attachments) => {
 
       let messageText = msg.waitforFacilities
 
-      callSendAPI(sender_psid, { "text": messageText })
+      sendMessage(sender_psid, { "text": messageText })
       getAreas(sender_psid, attachments[0].payload.coordinates)
     } else {
       askForLocation(sender_psid)
@@ -504,7 +511,7 @@ const handleMessage = (sender_psid, received_message, attachments) => {
     if (!report) {
       // display defaul actions
       response = defaultActions();
-      callSendAPI(sender_psid, response);
+      sendMessage(sender_psid, response);
     }
 
   }
@@ -519,7 +526,7 @@ const handlePostback = (sender_psid, received_postback) => {
 
   if (payload === '') {
     response = textResponse(msg.goAhead);
-    callSendAPI(sender_psid, response);
+    sendMessage(sender_psid, response);
   } else {
 
     switch (payload) {
@@ -537,13 +544,13 @@ const handlePostback = (sender_psid, received_postback) => {
         break;
       case 'cancel_evacuation':
         evacuees.splice(evacuees.indexOf(sender_psid), 1)
-        callSendAPI(sender_psid, { "text": msg.cancelLocation })
-        callSendAPI(sender_psid, defaultActions())
+        sendMessage(sender_psid, { "text": msg.cancelLocation })
+        sendMessage(sender_psid, defaultActions())
         break;
       case 'cancel_report':
         delete reportees[sender_psid];
-        callSendAPI(sender_psid, { "text": msg.cancelReport })
-        callSendAPI(sender_psid, defaultActions())
+        sendMessage(sender_psid, { "text": msg.cancelReport })
+        sendMessage(sender_psid, defaultActions())
         break;
       default:
         let reportee = reportees[sender_psid]
@@ -567,11 +574,11 @@ const handlePostback = (sender_psid, received_postback) => {
 io.sockets.on('connection', function (socket) {
   socket.on("verifyReport", (data) => {
     delete reportees[data.id];
-    callSendAPI(data.id, {
+    sendMessage(data.id, {
       "text": msg.reportVerified
     })
 
-    callSendAPI(data.id, {
+    sendMessage(data.id, {
       "text": msg.stayOnline
     })
 
