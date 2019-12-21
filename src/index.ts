@@ -31,7 +31,7 @@ let evacuees = [];
 let reportees = [];
 
 import msg from './messages';
-import { guid } from './ulitilies';
+import { guid, tempDB } from './ulitilies';
 import db from './db';
 
 app.get("/", (req, res) => {
@@ -55,7 +55,7 @@ app.get('/test', async (req, res) => {
 })
 
 app.get("/test1", (req, res) => {
-  res.send(["testData"]);
+  res.send(tempDB.get("incidents").value())
 })
 
 app.get('/webhook', (req, res) => {
@@ -148,7 +148,7 @@ const defaultActions = () => {
 }
 
 const sendMessage = (sender_psid, response, cb = null) => {
-  // Construct the message body
+
   let request_body = {
     "recipient": {
       "id": sender_psid
@@ -173,8 +173,6 @@ const sendMessage = (sender_psid, response, cb = null) => {
 }
 
 
-// commands
-
 const cancelReport = (uid) => {
   if (reportees) {
     sendMessage(uid, msg.cancelReport);
@@ -194,22 +192,9 @@ const watchCommands = (messageText, userId) => {
 }
 
 
-// send recent events
-
 const sendRecentEvents = (sender) => {
 
-  let sampleEvents = [
-    {
-      "title": "8 barangays in Pangasinan towns flooded",
-      "image_url": "https://news.mb.com.ph/wp-content/uploads/2018/07/220718_AERIALFLOOD_PANGASINAN_01_BASA.jpg",
-      "subtitle": "CALASIAO, Pangasinan -- Some eight barangays in Santa Barbara and this town remain flooded due to Tropical Depression (TD) 'Ineng' that was experienced all over Pangasinan."
-    },
-    {
-      "title": "Magnitude 6.5 earthquake rocks parts of Mindanao",
-      "image_url": "https://assets.rappler.com/7371A880F4664FD59067B002263C2370/img/A76D69B12FC14B78841DDEAB48C81C05/COLLAPSED_HOUSE_IN_BARANGAY_PARAISO_TULUNAN_COTABATO_A76D69B12FC14B78841DDEAB48C81C05.jpg",
-      "subtitle": "The strong earthquake happens just two days after a magnitude 6.6 tremor struck Cotabato and affected other provinces in Mindanao"
-    }
-  ]
+  let sampleEvents = tempDB.get("events").value()
 
   let events = {
     "attachment": {
@@ -266,7 +251,6 @@ const getLocation = (sender) => {
   }
 
   sendMessage(sender, options)
-
 }
 
 
@@ -290,7 +274,6 @@ const askforCompletetion = (sender) => {
   }
 
   sendMessage(sender, options)
-
 }
 
 
@@ -482,10 +465,9 @@ const handleMessage = (sender_psid, received_message, attachments) => {
         newReport.uid = guid();
         newReport.timestamp = Date.now();
 
-        // TODO:: save report type
 
-        // db.get('incidents').value().push(newReport);
-        // db.write();
+        tempDB.get('incidents').value().push(newReport);
+        tempDB.write();
       }
     }
 
@@ -509,7 +491,7 @@ const handleMessage = (sender_psid, received_message, attachments) => {
     console.log(`user has ping: ${received_message.text}`)
 
     if (!report) {
-      // display defaul actions
+      // display default actions
       response = defaultActions();
       sendMessage(sender_psid, response);
     }
@@ -568,7 +550,6 @@ const handlePostback = (sender_psid, received_postback) => {
 
 }
 
-// API routes
 
 
 io.sockets.on('connection', function (socket) {
@@ -582,9 +563,7 @@ io.sockets.on('connection', function (socket) {
       "text": msg.stayOnline
     })
 
-    // db.get('incidents').find({ uid: data.uid }).value().status = "verified";
-    // db.write();
-
-    // change report status to verified
+    tempDB.get('incidents').find({ uid: data.uid }).value().status = "verified";
+    tempDB.write();
   })
 });

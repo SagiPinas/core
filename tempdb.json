@@ -1,0 +1,107 @@
+{
+  "events": [
+    {
+      "title": "8 barangays in Pangasinan towns flooded",
+      "image_url": "https://news.mb.com.ph/wp-content/uploads/2018/07/220718_AERIALFLOOD_PANGASINAN_01_BASA.jpg",
+      "subtitle": "CALASIAO, Pangasinan -- Some eight barangays in Santa Barbara and this town remain flooded due to Tropical Depression (TD) 'Ineng' that was experienced all over Pangasinan."
+    },
+    {
+      "title": "Magnitude 6.5 earthquake rocks parts of Mindanao",
+      "image_url": "https://assets.rappler.com/7371A880F4664FD59067B002263C2370/img/A76D69B12FC14B78841DDEAB48C81C05/COLLAPSED_HOUSE_IN_BARANGAY_PARAISO_TULUNAN_COTABATO_A76D69B12FC14B78841DDEAB48C81C05.jpg",
+      "subtitle": "The strong earthquake happens just two days after a magnitude 6.6 tremor struck Cotabato and affected other provinces in Mindanao"
+    }
+  ],
+  "incidents": [
+    {
+      "uid": "demo1",
+      "id": 2695506260470251,
+      "type": "earthquake",
+      "specified": "",
+      "details": "We've seen 2 people are trapped on a collapsed here in kidapawan city, please send help",
+      "location": {
+        "lat": 14.507936,
+        "long": 121.001433
+      },
+      "status": "unverified",
+      "timestamp": 1573364283767
+    },
+    {
+      "uid": "demo2",
+      "id": 2695506260470251,
+      "type": "others",
+      "specified": "Nagkarmbola mga sasakyan dito",
+      "details": "Car crash here. 5 casualties. 3 dead. Need assistance asap.",
+      "location": {
+        "lat": 14.507936,
+        "long": 121.001433
+      },
+      "status": "unverified",
+      "timestamp": 1573364283767
+    },
+    {
+      "uid": "demo3",
+      "id": 2695506260470251,
+      "type": "earthquake",
+      "specified": "",
+      "details": "Gumuho yung megamall. Natrap kami dito sa sinehan. May mga bata at buntis kaming kasama.",
+      "location": {
+        "lat": 14.507936,
+        "long": 121.001433
+      },
+      "status": "verified",
+      "timestamp": 1573364283767
+    },
+    {
+      "uid": "demo4",
+      "id": 2695506260470251,
+      "type": "landslide",
+      "specified": "",
+      "details": "nanghihingi po kami ng tulong dito nagkalandslide sa amin madaming bahay ang gumuho dito kami ngayon sa may school",
+      "location": {
+        "lat": 14.507936,
+        "long": 121.001433
+      },
+      "status": "unverified",
+      "timestamp": 1573364283767
+    },
+    {
+      "uid": "demo5",
+      "id": 2695506260470251,
+      "type": "others",
+      "specified": "",
+      "details": "Stranded kami sa lrt malapit sa may gil puyat station mga 45mins na wala pa din responde umuusok na yung harap na bagon",
+      "location": {
+        "lat": 14.507936,
+        "long": 121.001433
+      },
+      "status": "rejected",
+      "timestamp": 1573364283767
+    },
+    {
+      "uid": "demo6",
+      "id": 2695506260470251,
+      "type": "flooding",
+      "specified": "",
+      "details": "We've seen people are trapped on a collapsed stuck in the roof a house please send help",
+      "location": {
+        "lat": 14.507936,
+        "long": 121.001433
+      },
+      "status": "unverified",
+      "timestamp": 1573364283767
+    },
+    {
+      "uid": "demo7",
+      "id": 2695506260470251,
+      "type": "earthquake",
+      "specified": "",
+      "details": "Sunog dito sa brgy 1/4 pasig. Kumalat na sa mga bahay na maliliit. Nangangailangan ng dagdag na bumbero.",
+      "location": {
+        "lat": 14.507936,
+        "long": 121.001433
+      },
+      "status": "unverified",
+      "timestamp": 1573364283767
+    }
+  ]
+}
