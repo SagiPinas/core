@@ -1,4 +1,21 @@
 {
+  "users": [
+    {
+      "id": 1,
+      "email": "test@gmail.com",
+      "password": "$2b$10$1BOq1EMqvlSYSREoVRZNz.zpNb/LHIRmbM50JLyXxqYJdLVmwr0d6",
+      "status": "active",
+      "name": "Bryce Mercines",
+      "city": "Pasay City"
+    },
+    {
+      "id": "8f3fc477-5fef-4abc-83f8-a93c55ac88bd",
+      "email": "test2@gmail.com",
+      "password": "$2b$10$iNtYfQs3cqJ/h8iz2aYZLuslIeqSc/Q3tvbBhZqsv6DkmkclmUuqG",
+      "city": "Pasaycity",
+      "status": "active"
+    }
+  ],
   "events": [
     {
       "title": "8 barangays in Pangasinan towns flooded",

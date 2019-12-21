@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors')
 const request = require('request');
 const axios = require('axios');
+const bcrypt = require('bcrypt');
 
 const app = express();
 const http = require('http').Server(app);
@@ -54,9 +55,93 @@ app.get('/test', async (req, res) => {
   }
 })
 
-app.get("/test1", (req, res) => {
+app.get("/incidents", (req, res) => {
   res.send(tempDB.get("incidents").value())
 })
+
+app.get("/events", (req, res) => {
+  res.send(tempDB.get("events").value());
+})
+
+app.post("/login", (req, res) => {
+
+  let email = req.body.email;
+  let password = req.body.password;
+
+
+  if (!email || !password) {
+    res.send({
+      status: "error",
+      message: "Incomplete Data Provided"
+    })
+  } else {
+
+    let userInstance = tempDB.get("users").find({ email: email }).value();
+    let hash = userInstance.password;
+
+    if (userInstance) {
+      bcrypt.compare(password, hash, (err, passwordTest) => {
+        if (!passwordTest) {
+          res.send({
+            status: "failed",
+            message: "Invalid Credentials"
+          })
+        } else {
+          res.send({
+            status: "success",
+            message: "Successful log in."
+          })
+        }
+
+      });
+
+    } else {
+      res.send({
+        status: "failed",
+        message: "User not found."
+      })
+    }
+  }
+})
+
+app.post("/signup", (req, res) => {
+  if (req.body.email && req.body.password
+    && req.body.name && req.body.city
+  ) {
+    let userInstance = tempDB.get("users").find({ email: req.body.email }).value();
+    if (userInstance) {
+      res.send({
+        status: "failed",
+        message: "The email address you provided is already taken."
+      })
+    } else {
+      bcrypt.hash(req.body.password, 10, (err, hash) => {
+        let newUser = {
+          id: guid(),
+          email: req.body.email,
+          password: hash,
+          city: req.body.city,
+          status: "active"
+        }
+
+        tempDB.get("users").value().push(newUser);
+        tempDB.write();
+
+        res.send({
+          status: "success",
+          message: "Account created successfully"
+        })
+      })
+    }
+  } else {
+    res.send({
+      status: "error",
+      message: "Incomplete Data Provided."
+    })
+  }
+})
+
+// Messenger chatbot endpoints
 
 app.get('/webhook', (req, res) => {
   console.log("[GET] Webhook endpoint hit!")
