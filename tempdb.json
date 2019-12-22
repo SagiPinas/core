@@ -1,19 +1,12 @@
 {
   "users": [
     {
-      "id": 1,
+      "id": "1",
       "email": "test@gmail.com",
       "password": "$2b$10$1BOq1EMqvlSYSREoVRZNz.zpNb/LHIRmbM50JLyXxqYJdLVmwr0d6",
       "status": "active",
       "name": "Bryce Mercines",
       "city": "Pasay City"
-    },
-    {
-      "id": "8f3fc477-5fef-4abc-83f8-a93c55ac88bd",
-      "email": "test2@gmail.com",
-      "password": "$2b$10$iNtYfQs3cqJ/h8iz2aYZLuslIeqSc/Q3tvbBhZqsv6DkmkclmUuqG",
-      "city": "Pasaycity",
-      "status": "active"
     }
   ],
   "events": [
@@ -32,6 +25,7 @@
     {
       "uid": "demo1",
       "id": 2695506260470251,
+      "responder": "1",
       "type": "earthquake",
       "specified": "",
       "details": "We've seen 2 people are trapped on a collapsed here in kidapawan city, please send help",
@@ -45,6 +39,63 @@
     {
       "uid": "demo2",
       "id": 2695506260470251,
+      "responder": "1",
+      "type": "flooding",
+      "specified": "",
+      "details": "Help! the flood levels in this area is terrible due to heavy rains",
+      "location": {
+        "lat": 14.507936,
+        "long": 121.001433
+      },
+      "status": "unverified",
+      "timestamp": 1573364283767
+    },
+    {
+      "uid": "demo3",
+      "id": 2695506260470251,
+      "responder": "1",
+      "type": "earthquake",
+      "specified": "",
+      "details": "This is a test incident report, please help me, we really need help",
+      "location": {
+        "lat": 14.507936,
+        "long": 121.001433
+      },
+      "status": "unverified",
+      "timestamp": 1573364283767
+    },
+    {
+      "uid": "demo4",
+      "id": 2695506260470251,
+      "responder": "1",
+      "type": "fire",
+      "specified": "",
+      "details": "tulong! may sunog dito malapit saamin, malakas at mabilis kumakalat ang apoy",
+      "location": {
+        "lat": 14.507936,
+        "long": 121.001433
+      },
+      "status": "unverified",
+      "timestamp": 1573364283767
+    },
+    {
+      "uid": "demo5",
+      "id": 2695506260470251,
+      "responder": "1",
+      "type": "earthquake",
+      "specified": "",
+      "details": "We've seen 2 people are trapped on a collapsed here in kidapawan city, please send help",
+      "location": {
+        "lat": 14.507936,
+        "long": 121.001433
+      },
+      "status": "unverified",
+      "timestamp": 1573364283767
+    },
+    {
+      "uid": "demo6",
+      "id": 2695506260470251,
+      "responder": "1",
       "type": "others",
       "specified": "Nagkarmbola mga sasakyan dito",
       "details": "Car crash here. 5 casualties. 3 dead. Need assistance asap.",
@@ -56,8 +107,9 @@
       "timestamp": 1573364283767
     },
     {
-      "uid": "demo3",
+      "uid": "demo7",
       "id": 2695506260470251,
+      "responder": "1",
       "type": "earthquake",
       "specified": "",
       "details": "Gumuho yung megamall. Natrap kami dito sa sinehan. May mga bata at buntis kaming kasama.",
@@ -69,8 +121,9 @@
       "timestamp": 1573364283767
     },
     {
-      "uid": "demo4",
+      "uid": "demo8",
       "id": 2695506260470251,
+      "responder": "1",
       "type": "landslide",
       "specified": "",
       "details": "nanghihingi po kami ng tulong dito nagkalandslide sa amin madaming bahay ang gumuho dito kami ngayon sa may school",
@@ -82,8 +135,9 @@
       "timestamp": 1573364283767
     },
     {
-      "uid": "demo5",
+      "uid": "demo9",
       "id": 2695506260470251,
+      "responder": "1",
       "type": "others",
       "specified": "",
       "details": "Stranded kami sa lrt malapit sa may gil puyat station mga 45mins na wala pa din responde umuusok na yung harap na bagon",
@@ -95,8 +149,9 @@
       "timestamp": 1573364283767
     },
     {
-      "uid": "demo6",
+      "uid": "demo10",
       "id": 2695506260470251,
+      "responder": "1",
       "type": "flooding",
       "specified": "",
       "details": "We've seen people are trapped on a collapsed stuck in the roof a house please send help",
@@ -108,8 +163,9 @@
       "timestamp": 1573364283767
     },
     {
-      "uid": "demo7",
+      "uid": "demo11",
       "id": 2695506260470251,
+      "responder": "1",
       "type": "earthquake",
       "specified": "",
       "details": "Sunog dito sa brgy 1/4 pasig. Kumalat na sa mga bahay na maliliit. Nangangailangan ng dagdag na bumbero.",

@@ -68,7 +68,6 @@ app.post("/login", (req, res) => {
   let email = req.body.email;
   let password = req.body.password;
 
-
   if (!email || !password) {
     res.send({
       status: "error",
@@ -137,6 +136,36 @@ app.post("/signup", (req, res) => {
     res.send({
       status: "error",
       message: "Incomplete Data Provided."
+    })
+  }
+})
+
+app.get("/public/responder", (req, res) => {
+  if (req.query.responderId) {
+    let responderInstance = tempDB.get("users").find({ id: req.query.responderId }).value();
+
+    if (responderInstance) {
+
+      delete responderInstance['password']
+
+      let responseData = {
+        status: "success",
+        profile: responderInstance,
+        history: tempDB.get("incidents").filter({ responder: req.query.responderId })
+      }
+
+      res.send(responseData)
+    } else {
+      res.send({
+        status: "error",
+        message: "Responder not found."
+      })
+    }
+
+  } else {
+    res.send({
+      status: "error",
+      message: "Incomplete data provided."
     })
   }
 })
@@ -648,7 +677,10 @@ io.sockets.on('connection', function (socket) {
       "text": msg.stayOnline
     })
 
-    tempDB.get('incidents').find({ uid: data.uid }).value().status = "verified";
+    let reportInstance = tempDB.get('incidents').find({ uid: data.uid }).value()
+    reportInstance.status = "verified"
+    reportInstance.responder = data.responder
+
     tempDB.write();
   })
 });
