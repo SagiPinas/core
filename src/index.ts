@@ -498,7 +498,7 @@ const incidentReport = (sender) => {
           {
             "type": "postback",
             "title": "Others.. (Iba pa)",
-            "payload": "incident",
+            "payload": "accident",
           }
         ]
       }
@@ -545,12 +545,12 @@ const handleMessage = (sender_psid, received_message, attachments) => {
 
   if (report) {
 
-    if (report.type === "incident" && report.specified === "") {
+    if (report.type === "accident" && report.specified === "") {
       report.specified = received_message.text;
       getDetails(sender_psid);
     }
 
-    if (report.type === "incident"
+    if (report.type === "accident"
       && report.specified !== ""
       && report.specified !== received_message.text
       && !attachments) {
@@ -558,7 +558,7 @@ const handleMessage = (sender_psid, received_message, attachments) => {
       getLocation(sender_psid);
     }
 
-    if (report.type !== "incident" && report.details === "" && !attachments) {
+    if (report.type !== "accident" && report.details === "" && !attachments) {
       report.details = received_message.text;
       getLocation(sender_psid);
     }
@@ -650,7 +650,7 @@ const handlePostback = (sender_psid, received_postback) => {
         break;
       default:
         let reportee = reportees[sender_psid]
-        if (payload !== "incident") {
+        if (payload !== "accident") {
           if (reportee) {
             reportee.type = payload;
             getDetails(sender_psid)
