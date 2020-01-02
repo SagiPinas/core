@@ -18,7 +18,7 @@ let port = process.env.PORT || 7000;
 
 app.use(express.static('views'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cors())
 http.listen(port);
 
@@ -76,9 +76,9 @@ app.post("/login", (req, res) => {
   } else {
 
     let userInstance = tempDB.get("users").find({ email: email }).value();
-    let hash = userInstance.password;
 
     if (userInstance) {
+      let hash = userInstance.password;
       bcrypt.compare(password, hash, (err, passwordTest) => {
         if (!passwordTest) {
           res.send({
