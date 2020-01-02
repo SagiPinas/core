@@ -25,7 +25,6 @@
     {
       "uid": "demo1",
       "id": 2695506260470251,
-      "responder": "1",
       "type": "earthquake",
       "specified": "",
       "details": "We've seen 2 people are trapped on a collapsed here in kidapawan city, please send help",
@@ -39,7 +38,6 @@
     {
       "uid": "demo2",
       "id": 2695506260470251,
-      "responder": "1",
       "type": "flooding",
       "specified": "",
       "details": "Help! the flood levels in this area is terrible due to heavy rains",
@@ -53,7 +51,6 @@
     {
       "uid": "demo3",
       "id": 2695506260470251,
-      "responder": "1",
       "type": "earthquake",
       "specified": "",
       "details": "This is a test incident report, please help me, we really need help",
@@ -67,7 +64,6 @@
     {
       "uid": "demo4",
       "id": 2695506260470251,
-      "responder": "1",
       "type": "fire",
       "specified": "",
       "details": "tulong! may sunog dito malapit saamin, malakas at mabilis kumakalat ang apoy",
@@ -81,7 +77,6 @@
     {
       "uid": "demo5",
       "id": 2695506260470251,
-      "responder": "1",
       "type": "earthquake",
       "specified": "",
       "details": "We've seen 2 people are trapped on a collapsed here in kidapawan city, please send help",
@@ -95,7 +90,6 @@
     {
       "uid": "demo6",
       "id": 2695506260470251,
-      "responder": "1",
       "type": "accident",
       "specified": "Nagkarmbola mga sasakyan dito",
       "details": "Car crash here. 5 casualties. 3 dead. Need assistance asap.",
@@ -123,7 +117,6 @@
     {
       "uid": "demo8",
       "id": 2695506260470251,
-      "responder": "1",
       "type": "landslide",
       "specified": "",
       "details": "nanghihingi po kami ng tulong dito nagkalandslide sa amin madaming bahay ang gumuho dito kami ngayon sa may school",
@@ -137,7 +130,6 @@
     {
       "uid": "demo9",
       "id": 2695506260470251,
-      "responder": "1",
       "type": "others",
       "specified": "",
       "details": "Stranded kami sa lrt malapit sa may gil puyat station mga 45mins na wala pa din responde umuusok na yung harap na bagon",
@@ -151,7 +143,6 @@
     {
       "uid": "demo10",
       "id": 2695506260470251,
-      "responder": "1",
       "type": "flooding",
       "specified": "",
       "details": "We've seen people are trapped on a collapsed stuck in the roof a house please send help",
@@ -165,7 +156,6 @@
     {
       "uid": "demo11",
       "id": 2695506260470251,
-      "responder": "1",
       "type": "earthquake",
       "specified": "",
       "details": "Sunog dito sa brgy 1/4 pasig. Kumalat na sa mga bahay na maliliit. Nangangailangan ng dagdag na bumbero.",
