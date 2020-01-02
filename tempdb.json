@@ -1,12 +1,11 @@
 {
   "users": [
     {
-      "id": "1",
+      "id": "39a7c41c-8f39-4905-bd3a-66a551f00122",
       "email": "test@gmail.com",
-      "password": "$2b$10$1BOq1EMqvlSYSREoVRZNz.zpNb/LHIRmbM50JLyXxqYJdLVmwr0d6",
-      "status": "active",
-      "name": "Bryce Mercines",
-      "city": "Pasay City"
+      "password": "$2b$10$TBekr.2/daO0QEa5FJaI0.3YvEpzsJREEjZNOmYWTdCIcwdVceLaa",
+      "city": "Pasaycity",
+      "status": "active"
     }
   ],
   "events": [

@@ -91,9 +91,7 @@ app.post("/login", (req, res) => {
             message: "Successful log in."
           })
         }
-
       });
-
     } else {
       res.send({
         status: "failed",
