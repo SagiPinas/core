@@ -86,9 +86,12 @@ app.post("/login", (req, res) => {
             message: "Invalid Credentials"
           })
         } else {
+          let userData = userInstance;
+          delete userData.password;
           res.send({
             status: "success",
-            message: "Successful log in."
+            message: "Successful log in.",
+            userData: userData
           })
         }
       });

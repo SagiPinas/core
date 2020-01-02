@@ -4,7 +4,7 @@
       "id": "39a7c41c-8f39-4905-bd3a-66a551f00122",
       "email": "test@gmail.com",
       "password": "$2b$10$TBekr.2/daO0QEa5FJaI0.3YvEpzsJREEjZNOmYWTdCIcwdVceLaa",
-      "city": "Pasaycity",
+      "city": "Pasay City",
       "status": "active"
     }
   ],
@@ -102,7 +102,7 @@
     {
       "uid": "demo7",
       "id": 2695506260470251,
-      "responder": "1",
+      "responder": "39a7c41c-8f39-4905-bd3a-66a551f00122",
       "type": "earthquake",
       "specified": "",
       "details": "Gumuho yung megamall. Natrap kami dito sa sinehan. May mga bata at buntis kaming kasama.",
