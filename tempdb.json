@@ -1,9 +1,10 @@
 {
   "users": [
     {
-      "id": "39a7c41c-8f39-4905-bd3a-66a551f00122",
+      "id": "0f1f0264-3962-4116-baa8-6db79c876c74",
       "email": "test@gmail.com",
-      "password": "$2b$10$TBekr.2/daO0QEa5FJaI0.3YvEpzsJREEjZNOmYWTdCIcwdVceLaa",
+      "password": "$2b$10$Jkl2nIk7zAOzekev4D5Z9uCDlq2k9qmC0Ib.OnTmEW6cWlScbO1Fi",
+      "name": "Bryce Mercines",
       "city": "Pasay City",
       "status": "active"
     }
@@ -102,7 +103,7 @@
     {
       "uid": "demo7",
       "id": 2695506260470251,
-      "responder": "39a7c41c-8f39-4905-bd3a-66a551f00122",
+      "responder": "0f1f0264-3962-4116-baa8-6db79c876c74",
       "type": "earthquake",
       "specified": "",
       "details": "Gumuho yung megamall. Natrap kami dito sa sinehan. May mga bata at buntis kaming kasama.",

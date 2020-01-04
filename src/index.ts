@@ -80,20 +80,24 @@ app.post("/login", (req, res) => {
     if (userInstance) {
       let hash = userInstance.password;
       bcrypt.compare(password, hash, (err, passwordTest) => {
-        if (!passwordTest) {
+        if (passwordTest === false) {
           res.send({
             status: "failed",
             message: "Invalid Credentials"
           })
         } else {
-          let userData = userInstance;
-          delete userData.password;
           res.send({
             status: "success",
             message: "Successful log in.",
-            userData: userData
+            userData: {
+              id: userInstance.id,
+              name: userInstance.name,
+              city: userInstance.city,
+              status: userInstance.status
+            }
           })
         }
+
       });
     } else {
       res.send({
@@ -115,11 +119,12 @@ app.post("/signup", (req, res) => {
         message: "The email address you provided is already taken."
       })
     } else {
-      bcrypt.hash(req.body.password, 10, (err, hash) => {
+      bcrypt.hash(req.body.password.trim(), 10, (err, hash) => {
         let newUser = {
           id: guid(),
-          email: req.body.email,
+          email: req.body.email.trim(),
           password: hash,
+          name: req.body.name,
           city: req.body.city,
           status: "active"
         }
