@@ -80,7 +80,7 @@ app.post("/login", (req, res) => {
     if (userInstance) {
       let hash = userInstance.password;
       bcrypt.compare(password, hash, (err, passwordTest) => {
-        if (passwordTest === false) {
+        if (!passwordTest) {
           res.send({
             status: "failed",
             message: "Invalid Credentials"
@@ -152,11 +152,15 @@ app.get("/public/responder", (req, res) => {
 
     if (responderInstance) {
 
-      delete responderInstance['password']
 
       let responseData = {
         status: "success",
-        profile: responderInstance,
+        profile: {
+          id: responderInstance.id,
+          name: responderInstance.name,
+          email: responderInstance.email,
+          city: responderInstance.city
+        },
         history: tempDB.get("incidents").filter({ responder: req.query.responderId })
       }
 
