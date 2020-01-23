@@ -31,3 +31,11 @@ build application
 ```sh
 npm run build
 ```
+
+#### commands:
+
+> this text command can be use to reset a report:
+
+``` sh
+cancel:report
+````
