@@ -281,7 +281,7 @@ const sendMessage = (sender_psid, response, cb = null) => {
   };
 
   request({
-    "uri": "https://graph.facebook.com/v5.5/me/messages",
+    "uri": "https://graph.facebook.com/v3.3/me/messages",
     "qs": { "access_token": process.env.PAGE_ACCESS_TOKEN },
     "method": "POST",
     "json": request_body
