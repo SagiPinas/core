@@ -523,6 +523,7 @@ const incidentReport = (sender) => {
   if (!reportees[sender]) {
     reportees[sender] = {
       id: sender,
+      uid: guid(),
       type: '',
       specified: '',
       details: '',
@@ -597,8 +598,6 @@ const handleMessage = (sender_psid, received_message, attachments) => {
     }
 
     askforCompletetion(sender_psid)
-  } else {
-    reportees[sender_psid].uid = guid();
   }
 
   if (evacuees.includes(sender_psid)) {
