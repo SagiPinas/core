@@ -34,6 +34,7 @@ let reportees = [];
 import msg from './messages';
 import { guid, tempDB } from './ulitilies';
 import db from './db';
+import { REPL_MODE_STRICT } from 'repl';
 
 app.get("/", (req, res) => {
   res.send({
@@ -586,7 +587,7 @@ const handleMessage = (sender_psid, received_message, attachments) => {
 
         let newReport = report;
         newReport.status = "unverified";
-        newReport.uid = guid();
+        newReport.uid = report.uid;
         newReport.timestamp = Date.now();
 
 
@@ -596,6 +597,8 @@ const handleMessage = (sender_psid, received_message, attachments) => {
     }
 
     askforCompletetion(sender_psid)
+  } else {
+    reportees[sender_psid].uid = guid();
   }
 
   if (evacuees.includes(sender_psid)) {
@@ -654,9 +657,12 @@ const handlePostback = (sender_psid, received_postback) => {
         sendMessage(sender_psid, defaultActions())
         break;
       case 'cancel_report':
-        delete reportees[sender_psid];
         sendMessage(sender_psid, { "text": msg.cancelReport })
         sendMessage(sender_psid, defaultActions())
+
+        io.emit("cancel_report", { report_id: reportees[sender_psid].uid })
+        tempDB.get('incidents').find({ uid: sender_psid })
+        delete reportees[sender_psid];
         break;
       default:
         let reportee = reportees[sender_psid]
