@@ -614,6 +614,7 @@ const handleMessage = (sender_psid, received_message, attachments) => {
 
   if (received_message.text && !evacuees.includes(sender_psid)) {
 
+    console.log(sender_psid)
     console.log(`user has ping: ${received_message.text}`)
 
     if (!report) {
