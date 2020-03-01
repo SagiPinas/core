@@ -614,7 +614,6 @@ const handleMessage = (sender_psid, received_message, attachments) => {
 
   if (received_message.text && !evacuees.includes(sender_psid)) {
 
-    console.log(sender_psid)
     console.log(`user has ping: ${received_message.text}`)
 
     if (!report) {
@@ -652,17 +651,21 @@ const handlePostback = (sender_psid, received_postback) => {
         getEvacuationAreas(sender_psid);
         break;
       case 'cancel_evacuation':
-        evacuees.splice(evacuees.indexOf(sender_psid), 1)
-        sendMessage(sender_psid, { "text": msg.cancelLocation })
-        sendMessage(sender_psid, defaultActions())
+        if (evacuees) {
+          evacuees.splice(evacuees.indexOf(sender_psid), 1)
+          sendMessage(sender_psid, { "text": msg.cancelLocation })
+          sendMessage(sender_psid, defaultActions())
+        }
         break;
       case 'cancel_report':
-        sendMessage(sender_psid, { "text": msg.cancelReport })
-        sendMessage(sender_psid, defaultActions())
+        if (reportees) {
+          sendMessage(sender_psid, { "text": msg.cancelReport })
+          sendMessage(sender_psid, defaultActions())
 
-        io.emit("cancel_report", { report_id: reportees[sender_psid].uid })
-        tempDB.get('incidents').find({ uid: sender_psid })
-        delete reportees[sender_psid];
+          io.emit("cancel_report", { report_id: reportees[sender_psid].uid })
+          tempDB.get('incidents').find({ uid: sender_psid })
+          delete reportees[sender_psid];
+        }
         break;
       default:
         let reportee = reportees[sender_psid]
