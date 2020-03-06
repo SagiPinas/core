@@ -583,7 +583,7 @@ const handleMessage = (sender_psid, received_message, attachments) => {
       if (attachments && attachments[0].type === "location") {
         report.location = attachments[0].payload.coordinates
 
-        console.log(attachments[0].payload)
+        console.log(attachments[0])
 
         let messageText = msg.gotLocation
 
