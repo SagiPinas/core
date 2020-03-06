@@ -557,6 +557,8 @@ const handleMessage = (sender_psid, received_message, attachments) => {
 
   if (report) {
 
+    console.log(attachments[0].payload)
+
     if (report.type === "accident" && report.specified === "") {
       report.specified = received_message.text;
       getDetails(sender_psid);
