@@ -14,6 +14,17 @@ export const guid = () => {
   });
 }
 
+export const getCoordinates = (url) => {
+  let coordinates = {}
+  var c0 = decodeURIComponent(url).split('https://')[2].split('aspx')[1];
+  let cardinals = new URLSearchParams(c0).get('where1').split(',');
+  coordinates = {
+    lat: cardinals[0],
+    long: cardinals[1]
+  }
+  return coordinates
+}
+
 
 
 

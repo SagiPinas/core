@@ -9,6 +9,8 @@ const app = express();
 const http = require('http').Server(app);
 const io = require('socket.io')(http);
 
+const { gerCoordinates } = require("./ulitilies");
+
 require('dotenv').config();
 
 
@@ -32,7 +34,7 @@ let evacuees = [];
 let reportees = [];
 
 import msg from './messages';
-import { guid, tempDB } from './ulitilies';
+import { guid, tempDB, getCoordinates } from './ulitilies';
 import db from './db';
 
 app.get("/", (req, res) => {
@@ -580,11 +582,8 @@ const handleMessage = (sender_psid, received_message, attachments) => {
       && report.details !== ""
       && report.location === "") {
       if (attachments && attachments[0].type === "location") {
-        report.location = attachments[0].payload.coordinates
 
-        console.log(`=====MESSAGE PAYLOAD======`)
-        console.log(attachments[0])
-        console.log(`===========================`)
+        report.location = getCoordinates(attachments[0].payload.url)
 
         let messageText = msg.gotLocation
 
