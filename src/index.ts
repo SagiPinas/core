@@ -151,6 +151,8 @@ app.post("/signup", (req, res) => {
 app.get("/public/responder", (req, res) => {
   if (req.query.responderId) {
     let responderInstance = tempDB.get("users").find({ id: req.query.responderId }).value();
+    let cancelledReports = tempDB.get("incidents").filter({ status: "cancelled" }).value();
+    let responderHistory = tempDB.get("incidents").filter({ responder: req.query.responderId }).value();
 
     if (responderInstance) {
 
@@ -163,7 +165,7 @@ app.get("/public/responder", (req, res) => {
           email: responderInstance.email,
           city: responderInstance.city
         },
-        history: tempDB.get("incidents").filter({ responder: req.query.responderId })
+        history: [...responderHistory, ...cancelledReports]
       }
 
       res.send(responseData)
