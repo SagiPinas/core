@@ -302,6 +302,8 @@ const sendMessage = (sender_psid, response, cb = null) => {
 const cancelReport = (uid) => {
   if (reportees) {
     sendMessage(uid, msg.cancelReport);
+    tempDB.get('inicidents').find({ uid: reportees[uid].uid }).value().status = "cancelled";
+    tempDB.write()
     delete reportees[uid];
   }
 }
@@ -667,8 +669,7 @@ const handlePostback = (sender_psid, received_postback) => {
           sendMessage(sender_psid, defaultActions())
 
           io.emit("cancel_report", { report_id: reportees[sender_psid].uid })
-          tempDB.get('incidents').find({ uid: sender_psid })
-          delete reportees[sender_psid];
+          cancelReport(sender_psid)
         }
         break;
       default:
