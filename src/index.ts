@@ -302,8 +302,13 @@ const sendMessage = (sender_psid, response, cb = null) => {
 const cancelReport = (uid) => {
   if (reportees) {
     sendMessage(uid, msg.cancelReport);
-    tempDB.get('inicidents').find({ uid: reportees[uid].uid }).value().status = "cancelled";
-    tempDB.write()
+    // tempDB.get('inicidents').find({ uid: reportees[uid].uid }).value().status = "cancelled";
+    // tempDB.write()
+    console.log(`
+    ==============
+     ${uid}
+    --------------
+    `)
     delete reportees[uid];
   }
 }
