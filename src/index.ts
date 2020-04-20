@@ -670,7 +670,7 @@ const handlePostback = (sender_psid, received_postback) => {
         }
         break;
       case 'cancel_report':
-        if (reportees) {
+        if (reportees[sender_psid]) {
           sendMessage(sender_psid, { "text": msg.cancelReport })
           sendMessage(sender_psid, defaultActions())
 
