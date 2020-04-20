@@ -306,15 +306,11 @@ const cancelReport = (uid) => {
     if (reportees[uid]) {
       sendMessage(uid, msg.cancelReport);
       let reportInstance = tempDB.get('incidents').find({ uid: reportees[uid].uid })
-      console.log(`
-       ================
-       ${reportInstance}
-       ===============
-      `)
-      // if (reportInstance) {
-      //   reportInstance.value().status = "cancelled";
-      //   tempDB.write()
-      // }
+
+      if (reportInstance) {
+        tempDB.get('incidents').find({ uid: reportees[uid].uid }).value().status = "cancelled";
+        tempDB.write()
+      }
 
       delete reportees[uid];
 
