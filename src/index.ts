@@ -614,7 +614,9 @@ const handleMessage = (sender_psid, received_message, attachments) => {
       let messageText = msg.waitforFacilities
 
       sendMessage(sender_psid, { "text": messageText })
-      getAreas(sender_psid, attachments[0].payload.coordinates)
+      // broken due to messenger webhook version 6.0
+      // getAreas(sender_psid, attachments[0].payload.coordinates)
+      getAreas(sender_psid, getCoordinates(attachments[0].payload.url))
     } else {
       askForLocation(sender_psid)
     }
