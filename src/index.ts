@@ -93,6 +93,7 @@ app.post("/login", (req, res) => {
               id: userInstance.id,
               name: userInstance.name,
               city: userInstance.city,
+              avatar: userInstance.avatar,
               status: userInstance.status
             }
           })
