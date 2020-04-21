@@ -9,8 +9,6 @@ const app = express();
 const http = require('http').Server(app);
 const io = require('socket.io')(http);
 
-const { gerCoordinates } = require("./ulitilies");
-
 require('dotenv').config();
 
 
@@ -110,6 +108,8 @@ app.post("/login", (req, res) => {
   }
 })
 
+
+
 app.post("/signup", (req, res) => {
   if (req.body.email && req.body.password
     && req.body.name && req.body.city
@@ -122,8 +122,9 @@ app.post("/signup", (req, res) => {
       })
     } else {
       bcrypt.hash(req.body.password.trim(), 10, (err, hash) => {
+        let newId = guid()
         let newUser = {
-          id: guid(),
+          id: newId,
           email: req.body.email.trim(),
           password: hash,
           name: req.body.name,
@@ -136,6 +137,7 @@ app.post("/signup", (req, res) => {
 
         res.send({
           status: "success",
+          userId: newId,
           message: "Account created successfully"
         })
       })
