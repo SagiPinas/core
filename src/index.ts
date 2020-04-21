@@ -130,6 +130,7 @@ app.post("/signup", (req, res) => {
           password: hash,
           name: req.body.name,
           city: req.body.city,
+          avatar: req.body.avatar,
           status: "active"
         }
 
