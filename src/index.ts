@@ -358,18 +358,19 @@ const sendRecentEvents = (sender) => {
 
       let phData = result.data[result.data.length - 1];
 
-      let countryStatus = {
-        "title": `[Philippines] ${phData.Recovered} Recovered, ${phData.Deaths} Deaths, ${phData.Active} Active cases`,
-        "image_url": "https://blc.edu/wp-content/uploads/2020/03/COVID19-graphic-with-text-FEATURED-IMAGE.jpg",
-        "subtitle": `As of ${moment(phData.Date).format('MMMM D, YYYY')} latest updates.`
-      }
 
       let events = {
         "attachment": {
           "type": "template",
           "payload": {
             "template_type": "generic",
-            "elements": countryStatus
+            "elements": [
+              {
+                "title": `[Philippines] ${phData.Recovered} Recovered, ${phData.Deaths} Deaths, ${phData.Active} Active cases`,
+                "image_url": "https://blc.edu/wp-content/uploads/2020/03/COVID19-graphic-with-text-FEATURED-IMAGE.jpg",
+                "subtitle": `As of ${moment(phData.Date).format('MMMM D, YYYY')} latest updates.`
+              }
+            ]
           }
         }
       }
