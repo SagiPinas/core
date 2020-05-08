@@ -353,18 +353,30 @@ const watchCommands = (messageText, userId) => {
 
 const sendRecentEvents = (sender) => {
 
-  let sampleEvents = tempDB.get("events").value()
+  axios.get(`https://api.covid19api.com/country/philippines`)
+    .then(result => {
 
-  let events = {
-    "attachment": {
-      "type": "template",
-      "payload": {
-        "template_type": "generic",
-        "elements": sampleEvents
+      let phData = result.data[result.data.length - 1];
+
+      let countryStatus = {
+        "title": `[Philippines] ${phData.Recovered} Recovered, ${phData.Deaths} Deaths, ${phData.Active} Active cases`,
+        "image_url": "https://blc.edu/wp-content/uploads/2020/03/COVID19-graphic-with-text-FEATURED-IMAGE.jpg",
+        "subtitle": `As of ${moment(phData.Date).format('MMMM D, YYYY')} latest updates.`
       }
-    }
-  }
-  sendMessage(sender, events)
+
+      let events = {
+        "attachment": {
+          "type": "template",
+          "payload": {
+            "template_type": "generic",
+            "elements": countryStatus
+          }
+        }
+      }
+      sendMessage(sender, events)
+
+    })
+
 }
 
 
