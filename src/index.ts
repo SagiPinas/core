@@ -9,6 +9,8 @@ const app = express();
 const http = require('http').Server(app);
 const io = require('socket.io')(http);
 
+import moment from 'moment'
+
 require('dotenv').config();
 
 io.set('origins', '*:*');
@@ -69,7 +71,7 @@ app.get("/events", (req, res) => {
       let countryStatus = {
         "title": `[Philippines] ${phData.Recovered} Recovered, ${phData.Deaths} Deaths, ${phData.Active} Active cases`,
         "image_url": "https://blc.edu/wp-content/uploads/2020/03/COVID19-graphic-with-text-FEATURED-IMAGE.jpg",
-        "subtitle": `current status`
+        "subtitle": `As of ${moment(phData.Date).format('MMMM D, YYYY')} latest updates.`
       }
 
       res.send([countryStatus])
