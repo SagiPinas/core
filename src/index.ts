@@ -11,7 +11,6 @@ const io = require('socket.io')(http);
 
 require('dotenv').config();
 
-
 io.set('origins', '*:*');
 
 let port = process.env.PORT || 7000;
@@ -704,7 +703,6 @@ const handlePostback = (sender_psid, received_postback) => {
   }
 
 }
-
 
 
 io.sockets.on('connection', function (socket) {
