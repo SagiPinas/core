@@ -59,7 +59,12 @@ app.get("/incidents", (req, res) => {
 })
 
 app.get("/events", (req, res) => {
-  res.send(tempDB.get("events").value());
+
+
+  axios.get(`https://api.covid19api.com/country/philippines`)
+    .then(result => {
+      res.send(result.data[result.data.length - 1])
+    })
 })
 
 app.post("/login", (req, res) => {
