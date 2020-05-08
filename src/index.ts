@@ -63,8 +63,18 @@ app.get("/events", (req, res) => {
 
   axios.get(`https://api.covid19api.com/country/philippines`)
     .then(result => {
-      res.send(result.data[result.data.length - 1])
+
+      let phData = result.data[result.data.length - 1];
+
+      let countryStatus = {
+        "title": `[Philippines] ${phData.Recovered} Recovered, ${phData.Deaths} Deaths, ${phData.Active} Active cases`,
+        "image_url": "https://blc.edu/wp-content/uploads/2020/03/COVID19-graphic-with-text-FEATURED-IMAGE.jpg",
+        "subtitle": `current status`
+      }
+
+      res.send([countryStatus])
     })
+
 })
 
 app.post("/login", (req, res) => {
