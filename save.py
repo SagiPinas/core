@@ -14,10 +14,10 @@ save = getSize('gitignore-default.sh')
 
 def tryDeployment():
 
-    if path.exists('.env') :
-      print "deployment valid."
-      os.system('./deploy-heroku.sh')
+    if current == save:
+      print "saving valid."
+      os.system('./save-delta.sh')
     else:
-      print "deployment invalid. check if you have an .env file properly setup"
+      print "saving invalid, env file exists"
 
 tryDeployment()
