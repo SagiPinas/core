@@ -125,8 +125,6 @@ app.post("/login", (req, res) => {
   }
 })
 
-
-
 app.post("/signup", (req, res) => {
   if (req.body.email && req.body.password
     && req.body.name && req.body.city
