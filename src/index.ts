@@ -750,6 +750,9 @@ io.sockets.on('connection', function (socket) {
 
     tempDB.write();
 
-    io.emit("verified_report", { uid: data.id })
+    io.emit("verified_report", {
+      uid: reportInstance.uid,
+      responder: reportInstance.responder
+    })
   })
 });
