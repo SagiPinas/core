@@ -24,7 +24,7 @@ app.use(cors())
 http.listen(port);
 
 console.log(`===============================`)
-console.log(`SagiPinas Code API ${port}`)
+console.log(`SagiPinas Core API ${port}`)
 console.log(`===============================`)
 
 const googleMapsAPIKEY = "AIzaSyD5kFZMwUIUDZ25nTtLx0_0G3x1d2GMiCY";
@@ -755,4 +755,18 @@ io.sockets.on('connection', function (socket) {
       responder: reportInstance.responder
     })
   })
+
+  // the list of socket events below are for testing purposes only
+
+  socket.on("test_report_data", (data) => {
+    console.log("=================")
+    console.log("Test Report")
+    console.log("=================")
+    let testReport = data
+    testReport.uid = guid()
+    console.log("Recieved test report data!")
+    tempDB.get('incidents').value().push(testReport);
+    tempDB.write();
+  })
+
 });
