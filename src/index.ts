@@ -765,8 +765,12 @@ io.sockets.on('connection', function (socket) {
     let testReport = data
     testReport.uid = guid()
     console.log("Recieved test report data!")
+    io.emit("report", data);
+    // console.log(testReport)
     tempDB.get('incidents').value().push(testReport);
     tempDB.write();
   })
+
+
 
 });
