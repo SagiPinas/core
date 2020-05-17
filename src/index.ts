@@ -57,7 +57,7 @@ app.get('/test', async (req, res) => {
 })
 
 app.get("/incidents", (req, res) => {
-  res.send(tempDB.get("incidents").value())
+  res.send(tempDB.get("incidents").value().reverse())
 })
 
 app.get("/events", (req, res) => {
