@@ -778,7 +778,6 @@ io.sockets.on('connection', function (socket) {
     if (reportInstance) {
       reportInstance.status = "cancelled";
       tempDB.write()
-
       io.emit("cancel_report", { report_id: id })
     }
   })
