@@ -766,11 +766,21 @@ io.sockets.on('connection', function (socket) {
     testReport.uid = guid()
     console.log("Recieved test report data!")
     io.emit("report", data);
-    // console.log(testReport)
     tempDB.get('incidents').value().push(testReport);
     tempDB.write();
   })
 
+  socket.on("test_cancel", (data) => {
+    let id = data.id;
 
+    let reportInstance = tempDB.get('incidents').find({ uid: id }).value()
+
+    if (reportInstance) {
+      reportInstance.status = "cancelled";
+      tempDB.write()
+
+      io.emit("cancel_report", { report_id: id })
+    }
+  })
 
 });
