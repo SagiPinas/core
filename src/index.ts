@@ -33,7 +33,7 @@ let evacuees = [];
 let reportees = [];
 
 import msg from './messages';
-import { guid, tempDB, getCoordinates } from './ulitilies';
+import { guid, tempDB, getCoordinates } from './utilities';
 import db from './db';
 
 app.get("/", (req, res) => {
@@ -274,14 +274,19 @@ const defaultActions = () => {
         "buttons": [
           {
             "type": "postback",
-            "title": "Report an Incident",
-            "payload": "report_incident"
+            "title": "Quick Incident Report",
+            "payload": "quick_report"
           },
           {
             "type": "postback",
-            "title": "View Recent Events",
-            "payload": "recent_events",
+            "title": "Report an Incident",
+            "payload": "report_incident"
           },
+          // {
+          //   "type": "postback",
+          //   "title": "View Recent Events",
+          //   "payload": "recent_events",
+          // },
           {
             "type": "postback",
             "title": "Evacuation Areas",
@@ -591,6 +596,27 @@ const getSpecification = (sender) => {
   })
 }
 
+// send quick report
+const quickReport = (sender) => {
+
+  console.log("QUICK REPORT")
+
+  if (!reportees[sender]) {
+    reportees[sender] = {
+      id: sender,
+      uid: guid(),
+      type: 'accident',
+      specified: '',
+      details: 'A distress report sent quickly from a location',
+      location: ''
+    }
+  }
+
+  getLocation(sender)
+
+  console.log(reportees);
+}
+
 const handleMessage = (sender_psid, received_message, attachments) => {
   let response;
 
@@ -601,8 +627,6 @@ const handleMessage = (sender_psid, received_message, attachments) => {
   let report = reportees[sender_psid];
 
   if (report) {
-
-
 
     if (report.type === "accident" && report.specified === "") {
       report.specified = received_message.text;
@@ -686,8 +710,11 @@ const handlePostback = (sender_psid, received_postback) => {
     response = textResponse(msg.goAhead);
     sendMessage(sender_psid, response);
   } else {
-
     switch (payload) {
+      case 'quick_report':
+        console.log('quick incident report!')
+        quickReport(sender_psid);
+        break;
       case 'report_incident':
         console.log('incident report!')
         incidentReport(sender_psid);

@@ -165,6 +165,18 @@
       },
       "status": "unverified",
       "timestamp": 1573364283767
+    },
+    {
+      "id": "2695506260470251",
+      "uid": "b66461a1-ec96-41aa-358d-c0a8ba2cfc47",
+      "type": "accident",
+      "details": "A distress report sent quickly from a location",
+      "location": {
+        "lat": "14.509705",
+        "long": "121.001852"
+      },
+      "status": "unverified",
+      "timestamp": 1591563253309
     }
   ]
 }
