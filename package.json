@@ -34,7 +34,7 @@
     "url": "git+https://github.com/quadroloop/hybrid-theory-core"
   },
   "author": "Bryce Mercines",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/SagiPinas/core/issues"
   },
