@@ -1,4 +1,4 @@
-[![core-banner](https://sagipinas.now.sh/sagipinas-core.png)]()
+# Core 
 > Contains the chatbot and API functionalities implemented in TypeScript
 
 
