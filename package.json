@@ -11,7 +11,7 @@
     "moment": "^2.25.3",
     "pg": "^7.15.1",
     "request": "^2.88.0",
-    "socket.io": "^2.2.0"
+    "socket.io": "^2.4.0"
   },
   "name": "core",
   "description": "SagiPinas Core",
